@@ -1,4 +1,4 @@
-name: Build and Test
+name: PHP Syntax Check
 
 on:
   push:
@@ -7,20 +7,20 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  lint:
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Set up environment
-      uses: actions/setup-node@v4  # Replace with setup-php, setup-python, etc.
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
       with:
-        node-version: '20'
+        php-version: '8.2'
 
-    - name: Install dependencies
-      run: npm ci
-
-    - name: Run build
-      run: npm run build
+    - name: Check PHP Syntax (Lint)
+      run: |
+        for file in $(find . -name "*.php"); do
+          php -l "$file" || exit 1
+        done
