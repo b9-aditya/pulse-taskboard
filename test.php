@@ -3,5 +3,5 @@ echo "Hello world";
 
 echo "Testing commit"  
 
-echo "test 2"
+echo "test 2";
 ?>
